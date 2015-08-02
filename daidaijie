@@ -1,0 +1,34 @@
+#!usr/bin/env python
+# -*- coding:utf-8 -*-
+
+import urllib2
+import cookielib
+import urllib
+import re
+import os
+
+uname = ""  # your username
+passwd = ""  # your password
+
+cookie_support = urllib2.HTTPCookieProcessor(cookielib.CookieJar())
+opener = urllib2.build_opener(cookie_support, urllib2.HTTPHandler)
+urllib2.install_opener(opener)
+content = urllib2.urlopen(
+    'http://credit.stu.edu.cn/portal/stulogin.aspx').read()
+
+headers = {
+    'Connection': 'keep-alive',
+    'User-Agent': r'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.115 Safari/537.36',
+    'Host': 'credit.stu.edu.cn'
+}
+
+postdata = r'__EVENTTARGET=&__EVENTARGUMENT=&__VIEWSTATE=%2FwEPDwUKMTM1MzI1Njg5N2Rk47x7%2FEAaT%2F4MwkLGxreXh8mHHxA%3D&__VIEWSTATEGENERATOR=FBAF4793&__EVENTVALIDATION=%2FwEWBAKo25zdBALT8dy8BQLG8eCkDwKk07qFCRXt1F3RFYVdjuYasktKIhLnziqd&txtUserID=' + \
+    uname + r'&txtUserPwd=' + passwd + r'&btnLogon=%B5%C7%C2%BC'
+
+req = urllib2.Request(
+    url='http://credit.stu.edu.cn/portal/stulogin.aspx',
+    data=postdata,
+    headers=headers
+)
+
+urllib2.urlopen(req)
